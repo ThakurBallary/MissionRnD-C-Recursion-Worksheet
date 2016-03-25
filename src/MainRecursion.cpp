@@ -10,6 +10,8 @@ int main(){
 	//Check CountPairs Sample Code 
 
 	//Check Steps Sample Code
+	int ways = get_steps(10);
+	printf("%d", ways);
 
 	//Check Spiral Sample Code
 

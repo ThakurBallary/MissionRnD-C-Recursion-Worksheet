@@ -23,8 +23,21 @@
 */
 #include "stdafx.h"
 
+int get_steps_recursion(int s) {
+	if (s < 0) {
+		return 0;
+	}
+	if (s == 0) {
+		return 1;
+	}
+	return  get_steps_recursion(s - 1) + get_steps_recursion(s - 2);
+}
+
 
 int get_steps(int s)
 {
-	return 0;
+	if (s <= 0) {
+		return 0;
+	}
+	return get_steps_recursion(s);
 }
