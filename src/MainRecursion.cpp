@@ -8,10 +8,19 @@ int main(){
 	//Check NSnipers
 
 	//Check CountPairs Sample Code 
+	/*
+	char str[4][10] = { { "aba" }, { "abab" }, { "abbbb" }, { "zzzaz" } };
+	int len[] = { 3, 4, 5, 5 };
+	for (int i = 0; i < 4; i++) {
+		printf("%d\n", count_pairs_wrapper(str[i], len[i]));
+	}
+	*/
 
 	//Check Steps Sample Code
-	int ways = get_steps(10);
-	printf("%d", ways);
+	/*
+	int ways = get_steps(5);
+	printf("%d\n", ways);
+	*/
 
 	//Check Spiral Sample Code
 
