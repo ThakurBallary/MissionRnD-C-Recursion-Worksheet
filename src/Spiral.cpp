@@ -34,7 +34,49 @@ Note : Check the function Parameters ,Its a double pointer .
 #include "stdafx.h"
 #include<stdlib.h>
 
+void recursive_spiral(int **arr, int sx, int sy, int rows, int columns, int *ans, int i, int col) {  
+	if (sx >= rows || sy >= columns ) {
+		return;
+	}
+	// top
+	int x = sx, y = sy;
+	while (y < columns){
+		ans[i] = arr[x][y];
+		i++;
+		y++;		
+	}
+	// right
+	y--;
+	while (++x < rows) {
+		ans[i] = arr[x][y];
+		i++;
+	}
+	// bottom
+	x--;
+	if (x != sx) {
+		while (--y >= sy) {
+			ans[i] = arr[x][y];
+			i++;
+		}
+	}	
+	// left
+	y++;
+	x--;
+	while (x > sx) {
+		ans[i] = arr[x][y];
+		i++;
+		x--;
+	}
+	recursive_spiral(arr, sx + 1, sy + 1, rows - 1, columns - 1, ans, i, col);
+}
+
 int *spiral(int rows, int columns, int **input_array)
 {
-	return NULL;
+	if (!input_array || rows < 1 || columns < 1) {
+		return NULL;
+	}
+	int * ans = (int *)malloc(sizeof(int) * (rows * columns));
+	int i = 0;
+	recursive_spiral(input_array, 0, 0, rows, columns, ans, i, columns);
+	return ans;
 }
