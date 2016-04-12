@@ -61,7 +61,7 @@ int main(){
 	int check=path_exists(&maze[0][0], m, n, x1, y1, x2, y2);
 	printf("%d\n", check);
 	*/
-	
+	/*
 	int maze[6][1] = {
 		{ 1 },
 		{ 1 },
@@ -74,6 +74,6 @@ int main(){
 	int x1 = 0, y1 = 0, x2 = 5, y2 = 0;
 	int check = path_exists((int*)maze, m, n, x1, y1, x2, y2);
 	printf("%d\n", check);
-	
+	*/
 	return 0;
 }
