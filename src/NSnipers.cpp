@@ -44,11 +44,52 @@ P.S: The Above Problem is just a modified version of a popular BackTracking prob
 
 #include "stdafx.h"
 
-
-
-int solve_nsnipers(int *battlefield, int n){
-	if (!battlefield || n == 2 || n == 3) {
-		return 0;
+int is_safe(int *battlefield, int n, int x, int y) {
+	int i;
+	for (i = y; i >= 0; i--) {
+		if (*((battlefield + x * n) + i) == 1) {
+			return 0;
+		}
+	}
+	for (i = x; i >= 0; i--) {
+		if (*((battlefield + i *n) + y) == 1) {
+			return 0;
+		}
+	}
+	int j;
+	for (i = x, j = y; i >= 0 && j >= 0; i++, j--) {
+		if (*((battlefield + i * n) + j) == 1) {
+			return 0;
+		}
+	}
+	for (i = x, j = y; i >= 0 && j >= 0; i--, j--) {
+		if (*((battlefield + i * n) + j) == 1) {
+			return 0;
+		}
 	}
 	return 1;
+}
+
+int place_sniper(int *battlefield, int n, int s) {
+	if (s >= n) {
+		return 1;
+	}
+	for (int i = 0; i < n; i++) {
+		if (is_safe(battlefield, n, i, s)) {
+			*((battlefield + i * n) + s) = 1;
+			if (place_sniper(battlefield, n, s + 1)) {
+				return 1;
+			}
+			*((battlefield + i * n) + s) = 0;
+		}
+	}
+	return 0;
+}
+
+int solve_nsnipers(int *battlefield, int n){
+	if (!battlefield || n < 1) {
+		return 0;
+	}
+	int snipers_placed = place_sniper(battlefield, n, 0);
+	return snipers_placed;
 }
