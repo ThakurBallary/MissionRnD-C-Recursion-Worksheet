@@ -35,7 +35,7 @@ more parameters .
 
 #include<stdlib.h>
 
-int path_exists_recursive(int *maze, int rows, int columns, int x1, int y1, int x2, int y2, int px, int py) {
+int path_exists_recursive(int *maze, int rows, int columns, int x1, int y1, int x2, int y2, int **visited) {
 	if (x1 < 0 || x1 >= rows || y1 < 0 || y1 >= columns) {
 		return 0;
 	}
@@ -45,31 +45,44 @@ int path_exists_recursive(int *maze, int rows, int columns, int x1, int y1, int 
 	if (x1 == x2 && y1 == y2) {
 		return 1;
 	}
-	if (y1 + 1 != py) {
-		int right = path_exists_recursive(maze, rows, columns, x1, y1 + 1, x2, y2, x1, y1);
-		if (right) {
-			return right;
-		}
-	}	
-	if (x1 + 1 != px) {
-		int down = path_exists_recursive(maze, rows, columns, x1 + 1, y1, x2, y2, x1, y1);
-		if (down) {
-			return down;
-		}
+	if (visited[x1][y1] == 1) {
+		return 0;
 	}
-	if (y1 - 1 != py) {
-		int left = path_exists_recursive(maze, rows, columns, x1, y1 - 1, x2, y2, x1, y1);
-		if (left) {
-			return left;
-		}
+	visited[x1][y1] = 1;
+	int right = path_exists_recursive(maze, rows, columns, x1, y1 + 1, x2, y2, visited);
+	if (right) {
+		return right;
 	}
-	if (x1 - 1 != px) {
-		int top = path_exists_recursive(maze, rows, columns, x1 - 1, y1, x2, y2, x1, y1);
-		if (top) {
-			return top;
-		}
-	}		
+	int down = path_exists_recursive(maze, rows, columns, x1 + 1, y1, x2, y2, visited);
+	if (down) {
+		return down;
+	}
+	int left = path_exists_recursive(maze, rows, columns, x1, y1 - 1, x2, y2, visited);
+	if (left) {
+		return left;
+	}
+	int top = path_exists_recursive(maze, rows, columns, x1 - 1, y1, x2, y2, visited);
+	if (top) {
+		return top;
+	}
+			
 	return 0;
+}
+
+void initialize(int **visited, int len, int rows, int columns, int val) {
+	if (!visited) {
+		return;
+	}
+	int i;
+	for (i = 0; i < len; i++) {
+		visited[i] = (int*)malloc(sizeof(int));
+	}
+	int j;
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < columns; j++) {
+			visited[i][j] = val;
+		}
+	}
 }
 
 int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
@@ -77,7 +90,9 @@ int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2
 	if (rows < 1 || columns < 1 || x1 < 0 || x1 >= rows || y1 < 0 || y1 >= columns || x2 < 0 || x2 >= rows || y2 < 0 || y2 >= columns) {
 		return 0;
 	}
-	int px = -1, py = -1;
-	int ans = path_exists_recursive(maze, rows, columns, x1, y1, x2, y2, px, py);
+	int len = rows * columns;
+	int **visited = (int**)malloc(sizeof(int*) * len);
+	initialize(visited, len, rows, columns, 0);
+	int ans = path_exists_recursive(maze, rows, columns, x1, y1, x2, y2, visited);
 	return ans;
 }

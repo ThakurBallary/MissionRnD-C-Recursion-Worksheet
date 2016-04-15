@@ -14,8 +14,8 @@ void generate_array(int **input_array, int rows, int columns, int seq)
 int main(){
 	
 	//Check NSnipers
-	int n = 4;
-	int board[4][4];
+	int n = 3;
+	int board[3][3];
 	int i = 0, j = 0;
 	for (i = 0; i < n; i++){
 		for (j = 0; j < n; j++){

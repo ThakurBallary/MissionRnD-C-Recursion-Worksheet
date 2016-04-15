@@ -50,7 +50,7 @@ int is_safe(int *battlefield, int n, int x, int y) {
 		if (*((battlefield + x * n) + i) == 1) {
 			return 0;
 		}
-	}
+	}	
 	for (i = x; i >= 0; i--) {
 		if (*((battlefield + i *n) + y) == 1) {
 			return 0;
